@@ -153,9 +153,22 @@ def run_many(params: BacktestParams, n_sims: int = 200):
         finals.append(res["pnl"][-1])
 
     mean = sum(finals) / len(finals)
+    minimum = min(final)
+    maximum = max(final)
+
+    variance = sum((x - mean) ** 2 for x in finals) / len(finals)
+    std_dev = math.sqrt(variance)
+
+    profitable_runs = sum(1 for x in finals if x > 0)
+    profit_probability = profitable_runs / len(finals)
+
 
     return {
         "mean": mean
+        "max": maximum
+        "risk - volatility": std_dev
+        "profit probability": profit_probability
+        "min": minimum
     }
 
 if __name__ == "__main__":
@@ -166,7 +179,7 @@ if __name__ == "__main__":
         T=30/252,
         steps=30,
         iv=0.25,
-        sigma_real=2,
+        sigma_real=0.5,
         mu=0.0,
         contracts=100,
         contract_multiplier=1,
