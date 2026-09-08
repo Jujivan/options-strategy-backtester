@@ -153,8 +153,8 @@ def run_many(params: BacktestParams, n_sims: int = 200):
         finals.append(res["pnl"][-1])
 
     mean = sum(finals) / len(finals)
-    minimum = min(final)
-    maximum = max(final)
+    minimum = min(finals)
+    maximum = max(finals)
 
     variance = sum((x - mean) ** 2 for x in finals) / len(finals)
     std_dev = math.sqrt(variance)
@@ -164,11 +164,11 @@ def run_many(params: BacktestParams, n_sims: int = 200):
 
 
     return {
-        "mean": mean
-        "max": maximum
-        "risk - volatility": std_dev
-        "profit probability": profit_probability
-        "min": minimum
+        "mean": mean,
+        "max": maximum,
+        "std_dev": std_dev,
+        "profit_probability": profit_probability,
+        "min": minimum,
     }
 
 if __name__ == "__main__":
